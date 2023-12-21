@@ -1,4 +1,16 @@
-import { Autocomplete, Button, Stack, TextField, styled } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import {
+  Autocomplete,
+  Button,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Stack,
+  TextField,
+  styled
+} from "@mui/material";
 import React from "react";
 import { Category } from "../../App";
 
@@ -6,6 +18,7 @@ interface HeaderProps {
   categories: Category[];
   activeCategory: Category;
   setActiveCategory: React.Dispatch<React.SetStateAction<Category>>;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const HeaderContent = styled("div")({
@@ -16,6 +29,7 @@ export default function Header({
   categories,
   activeCategory,
   setActiveCategory,
+  setSearchQuery,
 }: HeaderProps) {
   return (
     <>
@@ -34,18 +48,24 @@ export default function Header({
             }}
             value={activeCategory}
           />
-          <Autocomplete
-            sx={{ width: 300 }}
-            options={categories}
-            getOptionLabel={(category) => category.strCategory}
-            renderInput={(params) => (
-              <TextField {...params} label="Categories" />
-            )}
-            onChange={(_, newValue) => {
-              setActiveCategory(newValue!);
-            }}
-            value={activeCategory}
-          />
+          <FormControl sx={{ m: 1, width: 300 }} variant="outlined">
+            <InputLabel>search</InputLabel>
+            <OutlinedInput
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    type="button"
+                    sx={{ p: "10px" }}
+                    aria-label="search"
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="search"
+              
+            />
+          </FormControl>
         </Stack>
         <Button variant="contained" sx={{ marginLeft: "auto" }}>
           Add meal

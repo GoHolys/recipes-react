@@ -18,6 +18,7 @@ const OverallContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   margin: "0 100px",
+  height: "100%",
 });
 
 const HeaderContainer = styled("div")({
@@ -27,10 +28,10 @@ const HeaderContainer = styled("div")({
 function App() {
   const { data, loading } = useFetch<Categories>(categoriesURL);
   const [activeCategory, setActiveCategory] = useState<Category>({
-    strCategory: "Breakfast",
+    strCategory: "Chicken",
   });
+  const [searchQuery, setSearchQuery] = useState("");
 
-  console.log(data);
   if (loading) {
     return <h1>Loading</h1>;
   }
@@ -42,6 +43,7 @@ function App() {
           categories={data!.meals}
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
+          setSearchQuery={setSearchQuery}
         />
       </HeaderContainer>
       <Meals activeCategory={activeCategory} />

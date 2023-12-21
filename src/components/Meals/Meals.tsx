@@ -22,11 +22,20 @@ const HorizontalMenuContainer = styled("div")({
   marginBottom: "20px",
 });
 
+const MealsContainer = styled("div")({
+  flex: 1,
+  display: "flex",
+  flexDirection: "column",
+});
+
 export default function Meals({ activeCategory }: MealsProps) {
   const [isFavoritesActive, setIsFavoritesActive] = useState(false);
+  const [favorites, setFavorites] = useState<Meal[]>([]);
+
+  console.log(favorites);
 
   return (
-    <div>
+    <MealsContainer>
       <HorizontalMenuContainer>
         <HorizontalMenu
           isFavoritesActive={isFavoritesActive}
@@ -36,7 +45,9 @@ export default function Meals({ activeCategory }: MealsProps) {
       <MealsGrid
         activeCategory={activeCategory}
         isFavoritesActive={isFavoritesActive}
+        favorites={favorites}
+        setFavorites={setFavorites}
       />
-    </div>
+    </MealsContainer>
   );
 }

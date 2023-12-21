@@ -5,7 +5,7 @@ import MealsGrid from "../MealsGrid/MealsGrid";
 import { styled } from "@mui/material";
 
 interface MealsProps {
-  activeCategory: Category;
+  activeCategory: Category | null;
   searchQuery: string;
 }
 

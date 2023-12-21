@@ -27,7 +27,7 @@ const HeaderContainer = styled("div")({
 
 function App() {
   const { data, loading } = useFetch<Categories>(categoriesURL);
-  const [activeCategory, setActiveCategory] = useState<Category>({
+  const [activeCategory, setActiveCategory] = useState<Category | null>({
     strCategory: "Chicken",
   });
   const [searchQuery, setSearchQuery] = useState("");

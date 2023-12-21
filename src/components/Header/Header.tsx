@@ -16,8 +16,8 @@ import { Category } from "../../App";
 
 interface HeaderProps {
   categories: Category[];
-  activeCategory: Category;
-  setActiveCategory: React.Dispatch<React.SetStateAction<Category>>;
+  activeCategory: Category | null;
+  setActiveCategory: React.Dispatch<React.SetStateAction<Category | null>>;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -44,7 +44,7 @@ export default function Header({
               <TextField {...params} label="Categories" />
             )}
             onChange={(_, newValue) => {
-              setActiveCategory(newValue!);
+              setActiveCategory((prev) => newValue || prev);
             }}
             value={activeCategory}
           />
@@ -62,9 +62,10 @@ export default function Header({
                   </IconButton>
                 </InputAdornment>
               }
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setSearchQuery(e.target.value)
-              }
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setActiveCategory(null);
+                setSearchQuery(e.target.value);
+              }}
               label="search"
             />
           </FormControl>

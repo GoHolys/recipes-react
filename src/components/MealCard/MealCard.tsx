@@ -16,7 +16,7 @@ import { Meal } from "../Meals/Meals";
 export interface MealCardProps {
   idMeal: string;
   strMeal: string;
-  strCategory: string;
+  strCategory: string | undefined;
   description?: string;
   strMealThumb: string;
   setFavorites: React.Dispatch<React.SetStateAction<Meal[]>>;

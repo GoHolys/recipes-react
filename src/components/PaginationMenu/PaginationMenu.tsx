@@ -12,14 +12,14 @@ export default function PaginationMenu({
   mealsCount,
   setCurrentPage,
 }: PaginationMenuProps) {
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };
 
   return (
     <Pagination
       page={currentPage}
-      count={Math.ceil(mealsCount! / mealsPerPage)}
+      count={Math.ceil(mealsCount! / mealsPerPage) || 0}
       onChange={handleChange}
     />
   );

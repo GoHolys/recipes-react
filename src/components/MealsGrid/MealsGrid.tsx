@@ -9,7 +9,7 @@ import PaginationMenu from "../PaginationMenu/PaginationMenu";
 export const mealsPerPage = 10;
 
 interface MealsGridProps {
-  activeCategory: Category;
+  activeCategory: Category | null;
   isFavoritesActive: boolean;
   favorites: Meal[];
   setFavorites: React.Dispatch<React.SetStateAction<Meal[]>>;
@@ -40,15 +40,15 @@ export default function MealsGrid({
     setCurrentPage(1);
   }, [isFavoritesActive, searchQuery]);
 
-  const mealsCount = isFavoritesActive ? favorites.length : data?.meals.length;
+  const mealsCount = isFavoritesActive ? favorites.length : data?.meals?.length;
 
   const lastMealIndex = currentPage * mealsPerPage;
   const firstMealIndex = lastMealIndex - mealsPerPage;
 
   const currentData = isFavoritesActive ? favorites : data?.meals;
 
-  if(currentData?.length === 0){
-    <h1>No Data</h1>
+  if (currentData?.length === 0) {
+    <h1>No Data</h1>;
   }
 
   return (
@@ -59,7 +59,7 @@ export default function MealsGrid({
             <Grid item key={meal.idMeal} xs={12} sm={6} md={4} lg={2.2}>
               <MealCard
                 strMeal={meal.strMeal}
-                strCategory={activeCategory!.strCategory}
+                strCategory={activeCategory?.strCategory}
                 strMealThumb={meal.strMealThumb}
                 idMeal={meal.idMeal}
                 setFavorites={setFavorites}

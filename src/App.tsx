@@ -46,7 +46,7 @@ function App() {
           setSearchQuery={setSearchQuery}
         />
       </HeaderContainer>
-      <Meals activeCategory={activeCategory} />
+      <Meals activeCategory={activeCategory} searchQuery={searchQuery} />
     </OverallContainer>
   );
 }

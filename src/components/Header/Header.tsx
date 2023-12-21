@@ -9,7 +9,7 @@ import {
   OutlinedInput,
   Stack,
   TextField,
-  styled
+  styled,
 } from "@mui/material";
 import React from "react";
 import { Category } from "../../App";
@@ -62,8 +62,10 @@ export default function Header({
                   </IconButton>
                 </InputAdornment>
               }
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSearchQuery(e.target.value)
+              }
               label="search"
-              
             />
           </FormControl>
         </Stack>

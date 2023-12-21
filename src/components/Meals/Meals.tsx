@@ -6,6 +6,7 @@ import { styled } from "@mui/material";
 
 interface MealsProps {
   activeCategory: Category;
+  searchQuery: string;
 }
 
 export interface Meals {
@@ -28,7 +29,7 @@ const MealsContainer = styled("div")({
   flexDirection: "column",
 });
 
-export default function Meals({ activeCategory }: MealsProps) {
+export default function Meals({ activeCategory, searchQuery }: MealsProps) {
   const [isFavoritesActive, setIsFavoritesActive] = useState(false);
   const [favorites, setFavorites] = useState<Meal[]>([]);
 
@@ -47,6 +48,7 @@ export default function Meals({ activeCategory }: MealsProps) {
         isFavoritesActive={isFavoritesActive}
         favorites={favorites}
         setFavorites={setFavorites}
+        searchQuery={searchQuery}
       />
     </MealsContainer>
   );

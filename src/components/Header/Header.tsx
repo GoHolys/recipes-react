@@ -30,7 +30,7 @@ export default function Header({
               <TextField {...params} label="Categories" />
             )}
             onChange={(_, newValue) => {
-              setActiveCategory(newValue);
+              setActiveCategory(newValue!);
             }}
             value={activeCategory}
           />
@@ -42,7 +42,7 @@ export default function Header({
               <TextField {...params} label="Categories" />
             )}
             onChange={(_, newValue) => {
-              setActiveCategory(newValue);
+              setActiveCategory(newValue!);
             }}
             value={activeCategory}
           />

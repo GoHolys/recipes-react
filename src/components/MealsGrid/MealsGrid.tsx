@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import { Meals } from "../Meals/Meals";
+import { Meal, Meals } from "../Meals/Meals";
 import { Category } from "../../App";
 import { Grid } from "@mui/material";
 import MealCard from "../MealCard/MealCard";
@@ -18,16 +18,18 @@ export default function MealsGrid({
     `https://www.themealdb.com/api/json/v1/1/filter.php?c=${activeCategory?.strCategory}`
   );
 
-  console.log(data);
+  const [favorites, setFavorites] = useState<Meal[]>([]);
 
   return (
     <Grid container rowSpacing={4}>
-      {data?.meals.map((meal) => (
+      {(isFavoritesActive ? favorites : data?.meals)?.map((meal) => (
         <Grid item key={meal.idMeal} xs={12} sm={6} md={4} lg={2}>
           <MealCard
-            category={activeCategory!.strCategory}
-            name={meal.strMeal}
-            image={meal.strMealThumb}
+            strMeal={meal.strMeal}
+            strCategory={activeCategory!.strCategory}
+            strMealThumb={meal.strMealThumb}
+            idMeal={meal.idMeal}
+            setFavorites={setFavorites}
           />
         </Grid>
       ))}

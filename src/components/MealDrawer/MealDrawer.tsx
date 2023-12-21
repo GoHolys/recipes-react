@@ -3,7 +3,7 @@ import React from "react";
 import { MealCardProps } from "../MealCard/MealCard";
 import CloseIcon from "@mui/icons-material/Close";
 
-interface MealDrawerProps extends MealCardProps {
+interface MealDrawerProps extends Omit<MealCardProps, "setFavorites"> {
   isDrawerActive: boolean;
   setIsDrawerActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -15,10 +15,9 @@ const DrawerBody = styled("div")({
 
 export default function MealDrawer(props: MealDrawerProps) {
   const {
-    name,
-    category,
-    description,
-    image,
+    strCategory,
+    strMeal,
+    strMealThumb,
     isDrawerActive,
     setIsDrawerActive,
   } = props;
@@ -46,14 +45,14 @@ export default function MealDrawer(props: MealDrawerProps) {
               height: 167,
               width: 250,
             }}
-            alt={name}
-            src={image}
+            alt={strMeal}
+            src={strMealThumb}
           />
           <div>
             <Typography align="left" variant="h6" sx={{ textWrap: "nowrap" }}>
-              {name}
+              {strMeal}
             </Typography>
-            <Typography align="left">{category}</Typography>
+            <Typography align="left">{strCategory}</Typography>
           </div>
         </DrawerBody>
       </Box>

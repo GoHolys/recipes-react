@@ -11,12 +11,15 @@ import {
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { useState } from "react";
 import MealDrawer from "../MealDrawer/MealDrawer";
+import { Meal } from "../Meals/Meals";
 
 export interface MealCardProps {
-  name: string;
-  category: string;
+  idMeal: string;
+  strMeal: string;
+  strCategory: string;
   description?: string;
-  image: string;
+  strMealThumb: string;
+  setFavorites: React.Dispatch<React.SetStateAction<Meal[]>>;
 }
 
 const RightContent = styled("div")({
@@ -26,14 +29,15 @@ const RightContent = styled("div")({
 export default function MealCard(props: MealCardProps) {
   const [isDrawerActive, setIsDrawerActive] = useState(false);
 
-  const { name, category, description, image } = props;
+  const { setFavorites, ...mealInfo } = props;
+  const { idMeal, strMeal, strCategory, description, strMealThumb } = mealInfo;
 
   return (
     <div>
       <MealDrawer
         isDrawerActive={isDrawerActive}
         setIsDrawerActive={setIsDrawerActive}
-        {...props}
+        {...mealInfo}
       />
       <Card
         sx={{
@@ -43,7 +47,12 @@ export default function MealCard(props: MealCardProps) {
           height: 360,
         }}
       >
-        <CardMedia component="img" height="194" image={image} alt={name} />
+        <CardMedia
+          component="img"
+          height="194"
+          image={strMealThumb}
+          alt={strMeal}
+        />
         <CardContent
           sx={{
             display: "flex",
@@ -60,13 +69,27 @@ export default function MealCard(props: MealCardProps) {
                 WebkitBoxOrient: "vertical",
               }}
             >
-              {name}
+              {strMeal}
             </Typography>
-            <Typography variant="body1">{category}</Typography>
+            <Typography variant="body1">{strCategory}</Typography>
             <Typography variant="body2">{description}</Typography>
           </div>
           <RightContent>
-            <StarOutlineIcon style={{ fill: "gold" }} />
+            <StarOutlineIcon
+              style={{ fill: "gold" }}
+              onClick={() => {
+                setFavorites((currFavorites) => {
+                  if (
+                    !currFavorites.some(
+                      (favorite) => favorite.idMeal === idMeal
+                    )
+                  ) {
+                    return [...currFavorites, mealInfo];
+                  }
+                  return currFavorites;
+                });
+              }}
+            />
           </RightContent>
         </CardContent>
         <CardActions sx={{ marginTop: "auto" }}>

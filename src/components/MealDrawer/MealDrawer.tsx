@@ -148,8 +148,6 @@ export default function MealDrawer(props: MealDrawerProps) {
             </List>
           </div>
         </DrawerBody>
-      </Box>
-      <Box sx={{ marginLeft: "20px" }}>
         <Typography align="left" variant="h6">
           Instructions
         </Typography>
@@ -159,7 +157,6 @@ export default function MealDrawer(props: MealDrawerProps) {
           sx={{
             wordWrap: "breakWord",
             overflowWrap: "break-word",
-            maxWidth: 500,
           }}
         >
           {data?.meals[0].strInstructions}

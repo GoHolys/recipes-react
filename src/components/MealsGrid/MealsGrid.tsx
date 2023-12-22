@@ -34,6 +34,8 @@ export default function MealsGrid({
       : `https://www.themealdb.com/api/json/v1/1/filter.php?c=${activeCategory?.strCategory}`
   );
 
+  console.log(data);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -70,8 +72,8 @@ export default function MealsGrid({
       </MealGridContainer>
       <Box
         sx={{
-          alignSelf: "end",
-          marginTop: "auto",
+          alignSelf: "center",
+          my: "auto",
         }}
       >
         <PaginationMenu

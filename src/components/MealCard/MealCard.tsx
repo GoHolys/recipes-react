@@ -30,7 +30,7 @@ export default function MealCard(props: MealCardProps) {
   const [isDrawerActive, setIsDrawerActive] = useState(false);
 
   const { setFavorites, ...mealInfo } = props;
-  const { idMeal, strMeal, strCategory, description, strMealThumb } = mealInfo;
+  const { idMeal, strMeal, strCategory, strMealThumb } = mealInfo;
 
   return (
     <div>
@@ -44,12 +44,12 @@ export default function MealCard(props: MealCardProps) {
           display: "flex",
           flexDirection: "column",
           width: 240,
-          height: 360,
+          height: 310,
         }}
       >
         <CardMedia
           component="img"
-          height="194"
+          height="140"
           image={strMealThumb}
           alt={strMeal}
         />
@@ -72,11 +72,10 @@ export default function MealCard(props: MealCardProps) {
               {strMeal}
             </Typography>
             <Typography variant="body1">{strCategory}</Typography>
-            <Typography variant="body2">{description}</Typography>
           </div>
           <RightContent>
             <StarOutlineIcon
-              style={{ fill: "gold" }}
+              style={{ fill: "gold", cursor:"pointer" }}
               onClick={() => {
                 setFavorites((currFavorites) => {
                   if (

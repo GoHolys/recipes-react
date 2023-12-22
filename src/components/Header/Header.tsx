@@ -17,6 +17,7 @@ import { Category } from "../../App";
 interface HeaderProps {
   categories: Category[];
   activeCategory: Category | null;
+  searchQuery: string;
   setActiveCategory: React.Dispatch<React.SetStateAction<Category | null>>;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -30,10 +31,11 @@ export default function Header({
   activeCategory,
   setActiveCategory,
   setSearchQuery,
+  searchQuery,
 }: HeaderProps) {
   return (
     <>
-      <h1 className="text-blue-900">meals</h1>
+      <h1 className="text-blue-900">Recipes</h1>
       <HeaderContent>
         <Stack direction="row" spacing={4}>
           <Autocomplete
@@ -44,6 +46,7 @@ export default function Header({
               <TextField {...params} label="Categories" />
             )}
             onChange={(_, newValue) => {
+              setSearchQuery("");
               setActiveCategory((prev) => newValue || prev);
             }}
             value={activeCategory}
@@ -62,6 +65,7 @@ export default function Header({
                   </IconButton>
                 </InputAdornment>
               }
+              value={searchQuery}
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setActiveCategory(null);
                 setSearchQuery(e.target.value);

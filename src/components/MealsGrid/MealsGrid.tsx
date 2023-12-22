@@ -73,7 +73,8 @@ export default function MealsGrid({
       <Box
         sx={{
           alignSelf: "center",
-          my: "auto",
+          marginTop: "auto",
+          marginBottom: "20px",
         }}
       >
         <PaginationMenu

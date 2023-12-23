@@ -1,5 +1,7 @@
 import { Pagination } from "@mui/material";
 import { mealsPerPage } from "../MealsGrid/MealsGrid";
+import { calcPagesNumber } from "../../utils/calcPagesNumber";
+
 
 interface PaginationMenuProps {
   currentPage: number;
@@ -19,7 +21,7 @@ export default function PaginationMenu({
   return (
     <Pagination
       page={currentPage}
-      count={Math.ceil(mealsCount! / mealsPerPage) || 0}
+      count={calcPagesNumber(mealsCount!, mealsPerPage)}
       onChange={handleChange}
     />
   );

@@ -14,6 +14,7 @@ interface MealsGridProps {
   favorites: Meal[];
   setFavorites: React.Dispatch<React.SetStateAction<Meal[]>>;
   searchQuery: string;
+  addedMeals: Record<string, Array<Record<string, string>>>;
 }
 
 const MealGridContainer = styled("div")({
@@ -27,27 +28,33 @@ export default function MealsGrid({
   favorites,
   setFavorites,
   searchQuery,
+  addedMeals,
 }: MealsGridProps) {
-  const { data, error, loading } = useFetch<Meals>(
+  const { data } = useFetch<Meals>(
     searchQuery
       ? `https:www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`
       : `https://www.themealdb.com/api/json/v1/1/filter.php?c=${activeCategory?.strCategory}`
   );
 
-  
-
   const [currentPage, setCurrentPage] = useState(1);
+
+  console.log(data?.meals, addedMeals);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [isFavoritesActive, searchQuery]);
+  }, [isFavoritesActive, searchQuery, activeCategory]);
 
   const mealsCount = isFavoritesActive ? favorites.length : data?.meals?.length;
 
   const lastMealIndex = currentPage * mealsPerPage;
   const firstMealIndex = lastMealIndex - mealsPerPage;
 
-  const currentData = isFavoritesActive ? favorites : data?.meals;
+  const currentData = isFavoritesActive
+    ? favorites
+    : [
+        ...(data?.meals || []),
+        ...(addedMeals[activeCategory?.strCategory || ""] || []),
+      ];
 
   if (currentData?.length === 0) {
     <h1>No Data</h1>;
@@ -62,6 +69,7 @@ export default function MealsGrid({
               <MealCard
                 strMeal={meal.strMeal}
                 strCategory={activeCategory?.strCategory}
+                strInstructions={meal?.strInstructions}
                 strMealThumb={meal.strMealThumb}
                 idMeal={meal.idMeal}
                 setFavorites={setFavorites}

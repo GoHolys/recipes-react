@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import useFetch from "./hooks/useFetch";
 import Meals from "./components/Meals/Meals";
@@ -31,9 +31,13 @@ function App() {
     strCategory: "Chicken",
   });
   const [searchQuery, setSearchQuery] = useState("");
-  const [addedMeals, setAddedMeals] = useState({});
+  const [addedMeals, setAddedMeals] = useState(
+    JSON.parse(localStorage.getItem("addedMeals") || "{}")
+  );
 
-  console.log(addedMeals);
+  useEffect(() => {
+    localStorage.setItem("addedMeals", JSON.stringify(addedMeals));
+  }, [addedMeals]);
 
   if (loading) {
     return <h1>Loading</h1>;
@@ -51,7 +55,11 @@ function App() {
           setAddedMeals={setAddedMeals}
         />
       </HeaderContainer>
-      <Meals activeCategory={activeCategory} searchQuery={searchQuery} />
+      <Meals
+        activeCategory={activeCategory}
+        searchQuery={searchQuery}
+        addedMeals={addedMeals}
+      />
     </OverallContainer>
   );
 }

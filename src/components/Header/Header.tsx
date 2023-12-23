@@ -43,6 +43,7 @@ export default function Header({
   return (
     <>
       <AddMealModal
+        categories={categories}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         setAddedMeals={setAddedMeals}
@@ -53,6 +54,9 @@ export default function Header({
           <Autocomplete
             sx={{ width: 300 }}
             options={categories}
+            isOptionEqualToValue={(option, value) =>
+              option.strCategory === value.strCategory
+            }
             getOptionLabel={(category) => category.strCategory}
             renderInput={(params) => (
               <TextField {...params} label="Categories" />

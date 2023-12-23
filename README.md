@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+# Project Title
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a frontend React application that allows users to browse and search for meal recipes and favorite them.
 
-Currently, two official plugins are available:
+## API Reference
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project uses the MealDB API to retrieve meal data.
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Before you begin, ensure you have met the following requirements:
 
-- Configure the top-level `parserOptions` property like this:
+- You have installed the latest version of Node.js.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Installing
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+To install this project, follow these steps:
+
+1. Clone the repo
+2. Open the project in your preferred code editor
+3. Install dependencies by running `npm install`
+4. Start the development server by running `npm run dev`
+
+## Usage
+
+To use this project, follow these steps:
+
+1. Navigate to the project directory
+2. Run `npm run dev`
+3. Open http://localhost:5173 in your browser
+
+## Comments
+
+1. The API does not have an add post route, which means that users cannot add new recipes to the database through the API. Instead, the addition process is implemented on the frontend  and saved in the local storage, along with the favorites.
+
+2. When fetching meals according to categories using TheMealDB API, the API does not provide the object of the meal with the full information. As a result, the instructions are not displayed on the meal card. Instead, the instructions are displayed in the drawer.

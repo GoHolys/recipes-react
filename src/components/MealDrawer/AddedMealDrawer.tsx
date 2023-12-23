@@ -7,8 +7,7 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import React from "react";
-import useFetch from "../../hooks/useFetch";
+import React, { ReactNode } from "react";
 import { MealCardProps } from "../MealCard/MealCard";
 
 interface MealDrawerProps extends Omit<MealCardProps, "setFavorites"> {
@@ -16,86 +15,22 @@ interface MealDrawerProps extends Omit<MealCardProps, "setFavorites"> {
   setIsDrawerActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface FullMealData {
-  dateModified: null | string;
-  idMeal: string;
-  strArea: string;
-  strCategory: string;
-  strCreativeCommonsConfirmed: null | string;
-  strDrinkAlternate: null | string;
-  strImageSource: null | string;
-  strIngredient1: string;
-  strIngredient2: string;
-  strIngredient3: string;
-  strIngredient4: string;
-  strIngredient5: string;
-  strIngredient6: string;
-  strIngredient7: string;
-  strIngredient8: string;
-  strIngredient9: string;
-  strIngredient10: string;
-  strIngredient11: string;
-  strIngredient12: string;
-  strIngredient13: string;
-  strIngredient14: string;
-  strIngredient15: string;
-  strIngredient16: string;
-  strIngredient17: string;
-  strIngredient18: string;
-  strIngredient19: string;
-  strIngredient20: string;
-  strInstructions: string;
-  strMeal: string;
-  strMealThumb: string;
-  strMeasure1: string;
-  strMeasure2: string;
-  strMeasure3: string;
-  strMeasure4: string;
-  strMeasure5: string;
-  strMeasure6: string;
-  strMeasure7: string;
-  strMeasure8: string;
-  strMeasure9: string;
-  strMeasure10: string;
-  strMeasure11: string;
-  strMeasure12: string;
-  strMeasure13: string;
-  strMeasure14: string;
-  strMeasure15: string;
-  strMeasure16: string;
-  strMeasure17: string;
-  strMeasure18: string;
-  strMeasure19: string;
-  strMeasure20: string;
-  strSource: string;
-  strTags: string;
-  strYoutube: string;
-}
-
-interface FullMealsData {
-  meals: FullMealData[];
-}
-
 const DrawerBody = styled("div")({
   display: "flex",
   gap: 30,
 });
 
-export default function MealDrawer(props: MealDrawerProps) {
+export default function AddedMealDrawer(props: MealDrawerProps) {
   const {
-    idMeal,
     strCategory,
     strMeal,
+    strInstructions,
     strMealThumb,
     isDrawerActive,
     setIsDrawerActive,
   } = props;
 
-  const { data } = useFetch<FullMealsData>(
-    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
-  );
-
-  console.log(data);
+  console.log(props);
 
   return (
     <Drawer
@@ -137,9 +72,9 @@ export default function MealDrawer(props: MealDrawerProps) {
                   <ListItemText sx={{ textAlign: "left" }} key={i}>
                     <Typography variant="body2">
                       {
-                        data?.meals[0][
-                          `strIngredient${i + 1}` as keyof FullMealData
-                        ]
+                        props[
+                          `strIngredient${i + 1}` as keyof MealDrawerProps
+                        ] as ReactNode
                       }
                     </Typography>
                   </ListItemText>
@@ -159,7 +94,7 @@ export default function MealDrawer(props: MealDrawerProps) {
             overflowWrap: "break-word",
           }}
         >
-          {data?.meals[0].strInstructions}
+          {strInstructions}
         </Typography>
       </Box>
     </Drawer>

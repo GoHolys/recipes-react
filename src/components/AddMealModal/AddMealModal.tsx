@@ -1,4 +1,6 @@
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {
+  Autocomplete,
   Box,
   Button,
   FormControl,
@@ -7,11 +9,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { createRef, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState, MouseEvent } from "react";
+import { Category } from "../../App";
 
 interface AddMealModalProps {
   isModalOpen: boolean;
+  categories: Category[];
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setAddedMeals: React.Dispatch<
     React.SetStateAction<Record<string, Array<Record<string, string>>>>
@@ -20,30 +23,42 @@ interface AddMealModalProps {
 
 export default function AddMealModal({
   isModalOpen,
+  categories,
   setIsModalOpen,
   setAddedMeals,
 }: AddMealModalProps) {
   const [formData, setFormData] = useState({
     strMeal: "",
-    strCategory: "",
+    strCategory: "Chicken",
     strInstructions: "",
     ingredients: "",
     strMealThumb: "",
   });
 
   const ingredientCount = useRef(1);
-  const ingredientRef = useRef(null);
+  const ingredientRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (event) => {
-    const { name, value, id } = event.target;
-    console.log(ingredientRef.current.value);
+  const handleChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | MouseEvent<HTMLButtonElement>
+  ) => {
+    const { name, value, id } = event.target as HTMLInputElement;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: id === "strIngredient" ? ingredientRef.current.value : value,
+      [name]: id === "strIngredient" ? ingredientRef?.current?.value : value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleAutocomplete = (value: { strCategory: string }) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      strCategory: value?.strCategory,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setAddedMeals((currAddedMeals) => ({
       ...currAddedMeals,
@@ -98,11 +113,24 @@ export default function AddMealModal({
                     name="strMeal"
                     sx={{ width: 300 }}
                   />
-                  <TextField
-                    onChange={handleChange}
-                    label="Category"
-                    name="strCategory"
+                  <Autocomplete
                     sx={{ width: 300 }}
+                    options={categories}
+                    getOptionLabel={(category) => category.strCategory}
+                    isOptionEqualToValue={(option, value) =>
+                      option.strCategory === value.strCategory
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Categories"
+                        name="strCategory"
+                      />
+                    )}
+                    onChange={(_, value) => {
+                      handleAutocomplete(value!);
+                    }}
+                    value={{ strCategory: formData.strCategory }}
                   />
                   <TextField
                     onChange={handleChange}

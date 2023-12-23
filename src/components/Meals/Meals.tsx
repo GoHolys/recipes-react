@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Category } from "../../App";
 import HorizontalMenu from "../HorizontalMenu/HorizontalMenu";
 import MealsGrid from "../MealsGrid/MealsGrid";
@@ -7,6 +7,7 @@ import { styled } from "@mui/material";
 interface MealsProps {
   activeCategory: Category | null;
   searchQuery: string;
+  addedMeals: Record<string, Array<Record<string, string>>>;
 }
 
 export interface Meals {
@@ -17,6 +18,7 @@ export interface Meal {
   idMeal: string;
   strMeal: string;
   strMealThumb: string;
+  strInstructions?: string;
 }
 
 const HorizontalMenuContainer = styled("div")({
@@ -29,11 +31,19 @@ const MealsContainer = styled("div")({
   flexDirection: "column",
 });
 
-export default function Meals({ activeCategory, searchQuery }: MealsProps) {
+export default function Meals({
+  activeCategory,
+  searchQuery,
+  addedMeals,
+}: MealsProps) {
   const [isFavoritesActive, setIsFavoritesActive] = useState(false);
-  const [favorites, setFavorites] = useState<Meal[]>([]);
+  const [favorites, setFavorites] = useState<Meal[]>(
+    JSON.parse(localStorage.getItem("favorites") || "[]")
+  );
 
-  console.log(favorites);
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   return (
     <MealsContainer>
@@ -49,6 +59,7 @@ export default function Meals({ activeCategory, searchQuery }: MealsProps) {
         favorites={favorites}
         setFavorites={setFavorites}
         searchQuery={searchQuery}
+        addedMeals={addedMeals}
       />
     </MealsContainer>
   );

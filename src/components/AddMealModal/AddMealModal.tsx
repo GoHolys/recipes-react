@@ -11,13 +11,14 @@ import {
 } from "@mui/material";
 import { ChangeEvent, useRef, useState, MouseEvent } from "react";
 import { Category } from "../../App";
+import { Meal } from "../Meals/Meals";
 
 interface AddMealModalProps {
   isModalOpen: boolean;
   categories: Category[];
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setAddedMeals: React.Dispatch<
-    React.SetStateAction<Record<string, Array<Record<string, string>>>>
+    React.SetStateAction<Record<string, Array<Meal>>>
   >;
 }
 
@@ -27,11 +28,11 @@ export default function AddMealModal({
   setIsModalOpen,
   setAddedMeals,
 }: AddMealModalProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Meal>({
+    idMeal: "",
     strMeal: "",
     strCategory: "Chicken",
     strInstructions: "",
-    ingredients: "",
     strMealThumb: "",
   });
 

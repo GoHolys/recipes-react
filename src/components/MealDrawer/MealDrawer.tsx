@@ -9,11 +9,12 @@ import {
 } from "@mui/material";
 import React from "react";
 import useFetch from "../../hooks/useFetch";
-import { MealCardProps } from "../MealCard/MealCard";
+import { Meal } from "../Meals/Meals";
 
-interface MealDrawerProps extends Omit<MealCardProps, "setFavorites"> {
+interface MealDrawerProps {
   isDrawerActive: boolean;
   setIsDrawerActive: React.Dispatch<React.SetStateAction<boolean>>;
+  meal: Meal;
 }
 
 interface FullMealData {
@@ -82,20 +83,13 @@ const DrawerBody = styled("div")({
 });
 
 export default function MealDrawer(props: MealDrawerProps) {
-  const {
-    idMeal,
-    strCategory,
-    strMeal,
-    strMealThumb,
-    isDrawerActive,
-    setIsDrawerActive,
-  } = props;
+  const { meal, isDrawerActive, setIsDrawerActive } = props;
+
+  const { idMeal, strCategory, strMeal, strMealThumb } = meal;
 
   const { data } = useFetch<FullMealsData>(
     `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
   );
-
-  console.log(data);
 
   return (
     <Drawer

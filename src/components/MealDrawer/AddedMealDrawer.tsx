@@ -7,12 +7,13 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import React, { ReactNode } from "react";
-import { MealCardProps } from "../MealCard/MealCard";
+import React from "react";
+import { Meal } from "../Meals/Meals";
 
-interface MealDrawerProps extends Omit<MealCardProps, "setFavorites"> {
+interface MealDrawerProps {
   isDrawerActive: boolean;
   setIsDrawerActive: React.Dispatch<React.SetStateAction<boolean>>;
+  meal: Meal;
 }
 
 const DrawerBody = styled("div")({
@@ -21,16 +22,9 @@ const DrawerBody = styled("div")({
 });
 
 export default function AddedMealDrawer(props: MealDrawerProps) {
-  const {
-    strCategory,
-    strMeal,
-    strInstructions,
-    strMealThumb,
-    isDrawerActive,
-    setIsDrawerActive,
-  } = props;
+  const { meal, isDrawerActive, setIsDrawerActive } = props;
 
-  console.log(props);
+  const { strCategory, strMeal, strMealThumb, strInstructions } = meal;
 
   return (
     <Drawer
@@ -71,11 +65,7 @@ export default function AddedMealDrawer(props: MealDrawerProps) {
                 return (
                   <ListItemText sx={{ textAlign: "left" }} key={i}>
                     <Typography variant="body2">
-                      {
-                        props[
-                          `strIngredient${i + 1}` as keyof MealDrawerProps
-                        ] as ReactNode
-                      }
+                      {meal[`strIngredient${i + 1}` as keyof Meal]}
                     </Typography>
                   </ListItemText>
                 );

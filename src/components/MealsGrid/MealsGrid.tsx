@@ -14,7 +14,7 @@ interface MealsGridProps {
   favorites: Meal[];
   setFavorites: React.Dispatch<React.SetStateAction<Meal[]>>;
   searchQuery: string;
-  addedMeals: Record<string, Array<Record<string, string>>>;
+  addedMeals: Record<string, Array<Meal>>;
 }
 
 const MealGridContainer = styled("div")({
@@ -36,9 +36,9 @@ export default function MealsGrid({
       : `https://www.themealdb.com/api/json/v1/1/filter.php?c=${activeCategory?.strCategory}`
   );
 
+
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(data?.meals, addedMeals);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -66,14 +66,7 @@ export default function MealsGrid({
         <Grid container rowSpacing={4}>
           {currentData?.slice(firstMealIndex, lastMealIndex).map((meal) => (
             <Grid item key={meal.idMeal} xs={12} sm={6} md={4} lg={2.2}>
-              <MealCard
-                strMeal={meal.strMeal}
-                strCategory={activeCategory?.strCategory}
-                strInstructions={meal?.strInstructions}
-                strMealThumb={meal.strMealThumb}
-                idMeal={meal.idMeal}
-                setFavorites={setFavorites}
-              />
+              <MealCard setFavorites={setFavorites} activeCategory={activeCategory!} meal={meal} />
             </Grid>
           ))}
         </Grid>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import useFetch from "./hooks/useFetch";
 import Meals from "./components/Meals/Meals";
+import useDebounce from "./hooks/useDebounce";
 
 const categoriesURL = "https://www.themealdb.com/api/json/v1/1/list.php?c=list";
 
@@ -31,9 +32,11 @@ function App() {
     strCategory: "Chicken",
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const { debouncedSearch } = useDebounce(searchQuery);
   const [addedMeals, setAddedMeals] = useState(
     JSON.parse(localStorage.getItem("addedMeals") || "{}")
   );
+
 
   useEffect(() => {
     localStorage.setItem("addedMeals", JSON.stringify(addedMeals));
@@ -57,7 +60,7 @@ function App() {
       </HeaderContainer>
       <Meals
         activeCategory={activeCategory}
-        searchQuery={searchQuery}
+        searchQuery={debouncedSearch}
         addedMeals={addedMeals}
       />
     </OverallContainer>

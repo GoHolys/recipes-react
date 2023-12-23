@@ -13,34 +13,11 @@ import { useState } from "react";
 import AddedMealDrawer from "../MealDrawer/AddedMealDrawer";
 import MealDrawer from "../MealDrawer/MealDrawer";
 import { Meal } from "../Meals/Meals";
+import { Category } from "../../App";
 
 export interface MealCardProps {
-  idMeal: string;
-  strMeal: string;
-  strCategory: string | undefined;
-  description?: string;
-  strMealThumb: string;
-  strIngredient1?: string;
-  strIngredient2?: string;
-  strIngredient3?: string;
-  strIngredient4?: string;
-  strIngredient5?: string;
-  strIngredient6?: string;
-  strIngredient7?: string;
-  strIngredient8?: string;
-  strIngredient9?: string;
-  strIngredient10?: string;
-  strIngredient11?: string;
-  strIngredient12?: string;
-  strIngredient13?: string;
-  strIngredient14?: string;
-  strIngredient15?: string;
-  strIngredient16?: string;
-  strIngredient17?: string;
-  strIngredient18?: string;
-  strIngredient19?: string;
-  strIngredient20?: string;
-  strInstructions?: string;
+  meal: Meal;
+  activeCategory: Category;
   setFavorites: React.Dispatch<React.SetStateAction<Meal[]>>;
 }
 
@@ -51,8 +28,9 @@ const RightContent = styled("div")({
 export default function MealCard(props: MealCardProps) {
   const [isDrawerActive, setIsDrawerActive] = useState(false);
 
-  const { setFavorites, ...mealInfo } = props;
-  const { idMeal, strMeal, strCategory, strMealThumb } = mealInfo;
+  const { setFavorites, meal, activeCategory } = props;
+  const { idMeal, strMeal, strCategory, strMealThumb } = meal;
+
 
   return (
     <div>
@@ -60,13 +38,13 @@ export default function MealCard(props: MealCardProps) {
         <MealDrawer
           isDrawerActive={isDrawerActive}
           setIsDrawerActive={setIsDrawerActive}
-          {...mealInfo}
+          meal={meal}
         />
       ) : (
         <AddedMealDrawer
           isDrawerActive={isDrawerActive}
           setIsDrawerActive={setIsDrawerActive}
-          {...mealInfo}
+          meal={meal}
         />
       )}
       <Card
@@ -101,7 +79,9 @@ export default function MealCard(props: MealCardProps) {
             >
               {strMeal}
             </Typography>
-            <Typography variant="body1">{strCategory}</Typography>
+            <Typography variant="body1">
+              {strCategory || activeCategory?.strCategory || ""}
+            </Typography>
           </div>
           <RightContent
             onClick={() =>
@@ -109,7 +89,7 @@ export default function MealCard(props: MealCardProps) {
                 if (
                   !currFavorites.some((favorite) => favorite.idMeal === idMeal)
                 ) {
-                  return [...currFavorites, mealInfo];
+                  return [...currFavorites, meal];
                 }
                 return currFavorites.filter(
                   (listItem) => listItem.idMeal !== idMeal

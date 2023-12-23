@@ -34,7 +34,7 @@ export default function MealsGrid({
       : `https://www.themealdb.com/api/json/v1/1/filter.php?c=${activeCategory?.strCategory}`
   );
 
-  console.log(data);
+  
 
   const [currentPage, setCurrentPage] = useState(1);
 

@@ -11,8 +11,9 @@ import {
   TextField,
   styled,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Category } from "../../App";
+import AddMealModal from "../AddMealModal/AddMealModal";
 
 interface HeaderProps {
   categories: Category[];
@@ -20,6 +21,9 @@ interface HeaderProps {
   searchQuery: string;
   setActiveCategory: React.Dispatch<React.SetStateAction<Category | null>>;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  setAddedMeals: React.Dispatch<
+    React.SetStateAction<Record<string, Array<Record<string, string>>>>
+  >;
 }
 
 const HeaderContent = styled("div")({
@@ -32,9 +36,17 @@ export default function Header({
   setActiveCategory,
   setSearchQuery,
   searchQuery,
+  setAddedMeals,
 }: HeaderProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
+      <AddMealModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        setAddedMeals={setAddedMeals}
+      />
       <h1 className="text-blue-900">Recipes</h1>
       <HeaderContent>
         <Stack direction="row" spacing={4}>
@@ -74,7 +86,11 @@ export default function Header({
             />
           </FormControl>
         </Stack>
-        <Button variant="contained" sx={{ marginLeft: "auto" }}>
+        <Button
+          variant="contained"
+          sx={{ marginLeft: "auto" }}
+          onClick={() => setIsModalOpen(true)}
+        >
           Add meal
         </Button>
       </HeaderContent>

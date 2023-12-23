@@ -31,6 +31,9 @@ function App() {
     strCategory: "Chicken",
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [addedMeals, setAddedMeals] = useState({});
+
+  console.log(addedMeals);
 
   if (loading) {
     return <h1>Loading</h1>;
@@ -45,6 +48,7 @@ function App() {
           setActiveCategory={setActiveCategory}
           setSearchQuery={setSearchQuery}
           searchQuery={searchQuery}
+          setAddedMeals={setAddedMeals}
         />
       </HeaderContainer>
       <Meals activeCategory={activeCategory} searchQuery={searchQuery} />

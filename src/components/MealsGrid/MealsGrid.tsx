@@ -36,9 +36,7 @@ export default function MealsGrid({
       : `https://www.themealdb.com/api/json/v1/1/filter.php?c=${activeCategory?.strCategory}`
   );
 
-
   const [currentPage, setCurrentPage] = useState(1);
-
 
   useEffect(() => {
     setCurrentPage(1);
@@ -64,9 +62,13 @@ export default function MealsGrid({
     <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
       <MealGridContainer>
         <Grid container rowSpacing={4}>
-          {currentData?.slice(firstMealIndex, lastMealIndex).map((meal) => (
-            <Grid item key={meal.idMeal} xs={12} sm={6} md={4} lg={2.2}>
-              <MealCard setFavorites={setFavorites} activeCategory={activeCategory!} meal={meal} />
+          {currentData?.slice(firstMealIndex, lastMealIndex).map((meal, i) => (
+            <Grid item key={i} xs={12} sm={6} md={4} lg={2.2}>
+              <MealCard
+                setFavorites={setFavorites}
+                activeCategory={activeCategory!}
+                meal={meal}
+              />
             </Grid>
           ))}
         </Grid>
